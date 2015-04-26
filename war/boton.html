@@ -1,0 +1,225 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>App Teleasistencias</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"
+	rel="stylesheet">
+<script type="text/javascript" src="script.js"></script>
+
+<link rel="stylesheet" type="text/css" href="/formato.css"
+	media="screen" />
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
+<!-- favicon -->
+
+<link rel="shortcut icon" type="image/x-icon"
+	href="/imagenes/firefox-ico.ico" />
+<link rel="icon" type="image/x-icon" href="imagenes/firefox-ico.ico" />
+
+
+<script type="text/javascript"
+	src="http://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&"></script>
+<script type="text/javascript" src="gmaps.js"></script>
+
+
+
+<script type="text/javascript">
+	var position;
+	var lat;
+	var lon;
+
+	function initCoords() {
+		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(showPosition,
+					locationError);
+		} else {
+			console.log("Geolocation is not supported by this browser.");
+		}
+	}
+
+	function locationError() {
+		console.log("MAL");
+	}
+
+	function showPosition(position) {
+		this.lat = position.coords.latitude;
+		this.lon = position.coords.longitude;
+
+		console.log(position.coords);
+
+		//$('#lat').val(this.lat);
+		//$('#lon').val(this.lon);
+	}
+	function validacion() {
+		valor = document.getElementById("user").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El id debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("rit").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El ritmo cardiaco debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("tenMAX").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] La tensión máxima debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("tenMIN").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] La tensión mínima debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("glu").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El glucosa debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("ace").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El acelerómetro debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("gas").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El incremento de gas debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("tem").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El incremento de la temperatura debe tener un valor');
+			return false;
+		}
+		v
+		valor = document.getElementById("TEMP").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] La temperatura debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("co2").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] El co2 debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("alarma").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] La alarma debe tener un valor');
+			return false;
+		}
+		valor = document.getElementById("lat").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] Inténtelo de nuevpo');
+			return false;
+		}
+		valor = document.getElementById("lon").value;
+		if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+			alert('[ERROR] Inténtelo de nuevo');
+			return false;
+		}
+		return true;
+	}
+</script>
+
+
+
+</head>
+
+<body onLoad="initCoords()">
+	<h2>DATOS</h2>
+	<div class="container" id="container">
+		<form class="con_boton" action="/nuevaAlerta" method="POST"
+			onsubmit="return validacion()" accept-charset="utf-8">
+			<table>
+				<tr>
+					<td><strong>Id</strong></td>
+					<td><input name="user" id="user" type="text" placeholder="id" value=""></td>
+				</tr>
+
+				<tr>
+					<td><strong>Ritmo Cardiaco</strong></td>
+					<td><input name="rit" id="rit" type="text" placeholder="ritmo"></td>
+				</tr>
+
+
+				<tr>
+					<td><strong>Tensión Máxima</strong></td>
+					<td><input name="tenMAX" id="tenMAX" type="text"
+						placeholder="tension Maxima"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Tensión Mínima</strong></td>
+					<td><input name="tenMIN" id="tenMIN" type="text"
+						placeholder="tension Minima"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Nivel de Glucosa</strong></td>
+					<td><input name="glu" id="glu" type="text"
+						placeholder="Glucosa"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Acelerómetro</strong></td>
+					<td><input name="ace" id="ace" type="text"
+						placeholder="Acelerometro"></td>
+				</tr>
+				<tr>
+					<td><strong>Latitud</strong></td>
+					<td><input name="lat" id="lad" type="text"
+						placeholder="Latutud"></td>
+				</tr>
+				<tr>
+					<td><strong>Longuitud</strong></td>
+					<td><input name="lon" id="lon" type="text"
+						placeholder="Longuitud"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Incremento de gas</strong></td>
+					<td><input name="gas" id="gas" type="text"
+						placeholder="Incremento de gas"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Incremento de temperatura</strong></td>
+					<td><input name="tem" id="tem" type="text"
+						placeholder="Incremeto de temperatura"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Temperatura</strong></td>
+					<td><input name="TEMP" id="TEMP" type="text"
+						placeholder="Temperatura"></td>
+				</tr>
+
+				<tr>
+					<td><strong>CO2</strong></td>
+					<td><input name="co2" id="co2" type="text" placeholder="CO2"></td>
+				</tr>
+
+				<tr>
+					<td><strong>Alarmas</strong></td>
+					<td><input name="alarma" id="alarma" type="text"
+						placeholder="Alarmas"></td>
+				</tr>
+
+
+			</table>
+			<button class="btn btn-info btn-block login" type="submit">Enviar</button>
+			<button class="btn btn-info btn-block login"
+				onclick="history.back(-1)" type="submit">volver</button>
+		</form>
+	</div>
+
+</body>
+
+</html>
